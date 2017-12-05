@@ -1,0 +1,114 @@
+---
+title: "Rmarkdown"
+author: "Simeon Markind"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
+output: pdf_document
+---
+
+<!-- 
+output:
+  html_document:
+    css: style.css 
+-->
+
+## Setup
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>. Cheatsheet can be found <http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf>  Reference guide can be found <https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf>  
+
+Today we will talk about pdf Rmarkdown documents. Your final project is required to be done in Rmarkdown. You will want to use the pdf_document type for your write-up. Your slides for the presentation should be pdf, of type beamer.
+
+For today's lecture you will need to open up an Rmarkdown document. Go to File -> New File -> R Markdown and create an PDF document with your name. Title it "R Markdown Practice." 
+
+At the top of the Rmd script you should see a section that looks like the following:
+
+\---  
+title: "Rmarkdown"   
+author: "Simeon Markind"  
+date: '`r format(Sys.time(), "%d %B, %Y")`'  
+output: html_document  
+\---
+
+This is the YAML section of the document. We will discuss it later in this lecture. Your date argument should look different, we will talk about what my date argument does at the end of the lecture.  
+
+Below this YAML section you should have the basic text that Rstudio puts in to all new Rmarkdown documents and an R chunk that calls the knitr::opts_chunk$set() command. We will also talk about this later but for now you can simply ignore all the text that came with the document. Before making any changes make sure that the pdf will compile and click on the Knit buttom at the top of your editor window. You should get a pdf document to pop up onto your screen. Let one of the TAs know if this does not work for you.
+
+Rmarkdown provides a ready made environment in which you can seamlessly embed code, text, and graphics. Although Rmarkdown comes with Rstudio and by default runs R code, you can also run many other languages in a markdown document. To see which engines are available to you type `names(knitr::knit_engines$get())` and you should get a list similar to the following: `r names(knitr::knit_engines$get())`
+
+```{r, include=TRUE, eval=TRUE}
+library(ggplot2)
+library(knitr)
+library(data.table)
+```
+
+#Basics
+
+An Rmarkdown document has two modes, we will refer to them as "text" and "code." Text mode is what you are reading now. Default settings for text mode are black text on a white background. (We will discuss how to change this for html later)
+
+In the text mode of a markdown document you can type text as you would in a word document and the output document simply returns exactly what you put in, tpyos and all. Please refer to the reference guide linked above to see more options for what you can do in this part of Rmarkdown.
+
+<!-- example of using css file to change background color -->
+
+
+## Text Mode
+
+* Formatting Summary 
+    + Two spaces at the end of a line indicate a new line.  
+    + Pound symbols, #, at the beginning of a line indicate headers.  
+        + You can use up to six # signs, for each additional # sign used the text becomes smaller.  
+    + Surrounding your text in * or _ makes italics.
+        + i.e. \*italics\* gives *italics* and \_italics\_ does as well
+    + ** will bold your text as does __
+        + \*\*bold\*\* and \_\_bold\_\_ gives __bold__
+    + The ^ creates superscripts so x\^2\^ gives x^2^
+    + The ~~ gives strikethrough
+        + \~\~I have never used this\~\~ ~~but maybe you will~~
+    + To insert links use the following syntax [text] (webaddress)
+        + To learn more go [here]("rmarkdown.rstudio.com") 
+    + Inline equations use Latex math mode, the \$ sign.
+        + \$y = \\pi*r^{2}\$ 
+            + gives $y = \pi*r^{2}$
+        + If you have used LaTeX before you will be able to use many of the latex typesetting commands and functions in markdown.
+    + The backslash \ is the escape character and allows you to show \\\*text\\\* that would otherwise involve *formatting.*
+    + You can insert tables by hand as shown on the reference guide but I would recommend against that.
+    + Bullets are made with a single * sign followed by a space
+        + sub-bullets are made by indenting directly below the preceding text and using a + symbol
+    + Ordered lists follow the same format but instead of using * as the symbol use a number.
+        + Note that you can sub-number a numbered list
+        
+1. Ordered list
+    1. first sub-bullet  
+        1a. sub-sub-bullet
+
+__In your Rmarkdown file add the following lines, be sure to format them so they are identical when you knit the document.__
+
+
+# This is the largest header size
+
+*I have really enjoyed this course on* ~~python~~, **sorry, R**   
+$5^{2} + 4 = 29$ 
+
+* I like the following:  
+    + lists  
+        + sub-bullets  
+
+1. numbered lists are good too
+    2. They make it easy to organize things.
+
+### Some LaTeX Basics
+
+\LaTeX  is a powerful typesetting language used throughout academia and the professional world to easily display mathematical functions, graphics, images, etc... alongside text. Rmarkdown is built in part on \LaTeX which is why many \LaTeX commands are also Rmarkdown text commands. The formatting above are \LaTeX commands. One of the most important features of \Latex for our purposes will be the use of math mode. This mode allows us to add equations both inline and for display in our document. For your final project you should use these modes to explain the models used for your analysis. 
+
+#### Inline Equations
+
+Inline equations occur within the text smoothly. For example if I wanted to tell you that $y = \sum_{i = 1}^n mx_i^{2} + b$ in the middle of a sentence I could do that. This is not an equation that has any meaning to us but is a good display. Inline math mode is accessed using a single \$ sign surrounding each end of the equation. So, for my code above I typed: \$y = \\sum_{i = 1}^n mx_i^{2} + b\$. The \\sum_ gives the sigma character and the x_i^{2} returns the $x_i^{2}$ symbol. 
+
+* \\sum is a built-in symbol to LaTeX. And gives $\sum$   
+    + There are many others such as \\infty which gives $\infty$
+* The single _ character allows for subscripts as we saw above. So \$\\sum_1\$ gives us $\sum_1$. (I will no longer explicitly show the $ symbols in the explanation but remember that you need them to display math symbols inline.)
+* The ^ sign gives superscript and the brackets take the numbers to display in the superscript. So x^{2} gives $x^{2}$ 
+    + The brackets can accept multiple numbers, so you could theoretically type x^{2,3} which gives $x^{2,3}$ which makes no sense.
+    + However, this ability is important as we will see in a minute with subscripting. To show element A in row i and column j in a matrix you would type A_{i,j} and show $A_{i,j}$
+
+Putting this all together we can show another example of inline math. $\int_0^{1} x^{2}dx = \frac{x^2}{2}|_0^{1}  = \frac{1}{2} - 0 = \frac{1}{2}$. The code for which is: \$\\int_0^{1} x^{2}dx = \\frac{x^2}{2}|_0^{1}  = \\frac{1}{2} - 0 = \\frac{1}{2}\$. Here the | character (pipe) gives us the evaluation bar for x once we have evaluated it. To see more examples of using different latex functions check out the webpage: http://www.calvin.edu/~rpruim/courses/m343/F12/RStudio/LatexExamples.html. If you do not find the math symbols you are looking for there, try this CU webpage http://www.colorado.edu/physics/phys4610/phys4610_sp15/PHYS4610_sp15/Home_files/LaTeXSymbols.pdf. If that fails ask google. 
+
+Note that Latex symbols follow a basic pattern when defining them of \\function{input} with the braces delineating inputs. For example $\cos{(x^{2})}$ is \$\\cos{(x^{2})}\$ 
